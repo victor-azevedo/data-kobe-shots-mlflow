@@ -1,3 +1,7 @@
 pandas
 scikit-learn
 mlflow
+pyyaml
+ipykernel
+typer
+kaggle
