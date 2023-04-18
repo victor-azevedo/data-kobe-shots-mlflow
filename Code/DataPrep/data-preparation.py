@@ -59,7 +59,7 @@ def split_data(data: pd.DataFrame, test_size: int = 20) -> None:
     save_data_to_parquet(
         data=data_train, sub_folder="operalization", filename="base_train")
     save_data_to_parquet(
-        data=data_train, sub_folder="operalization", filename="base_test")
+        data=data_test, sub_folder="operalization", filename="base_test")
 
 
 def save_data_to_parquet(data: pd.DataFrame, sub_folder: str, filename: str) -> None:
@@ -72,7 +72,7 @@ def save_data_to_parquet(data: pd.DataFrame, sub_folder: str, filename: str) -> 
     print(f"Arquivo salvo em: {file}")
 
 
-def crete_experiment(experiment_name: str) -> int:
+def create_experiment(experiment_name: str) -> int:
     experiment = mlflow.get_experiment_by_name(experiment_name)
     if experiment is not None:
         experiment_id = experiment.experiment_id
@@ -91,7 +91,7 @@ app = typer.Typer()
 @app.command()
 def load_data(shot_type: int = 2):
 
-    experiment_id = crete_experiment("PreparacaoDados")
+    experiment_id = create_experiment("PreparacaoDados")
     with mlflow.start_run(run_name=f"data-preparation-{(datetime.now()).strftime('%Y-%m-%dT%H:%M:%S')}", experiment_id=experiment_id):
         if shot_type == 2 or shot_type == 3:
             data = load_dataset(shot_type)
